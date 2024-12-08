@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: operator-deployment
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: operator
+  template:
+    metadata:
+      labels:
+        app: operator
+    spec:
+      serviceAccountName: k8s-deno-boilerplate-operator-sa
+      automountServiceAccountToken: true
+      containers:
+        - name: operator
+          image: operator
+          env:
+            - name: REDIS_CONNECTION_STRING
+              value: redis://operator-redis-svc:6379
+            - name: BASE_GREETING
+              value: {{ .Values.baseGreeting }}
+          resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}

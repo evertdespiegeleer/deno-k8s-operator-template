@@ -1,0 +1,6 @@
+apiVersion: v2
+name: deno-k8s-operator-boilerplate
+description: A not so meaningful yet k8s operator built with Deno.
+type: application
+version: 0.0.0
+appVersion: "0.0.0"

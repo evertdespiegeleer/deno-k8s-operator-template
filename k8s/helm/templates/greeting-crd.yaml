@@ -1,0 +1,66 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: greetings.k8s.evertdespiegeleer.com
+spec:
+  group: k8s.evertdespiegeleer.com
+  versions:
+    - name: v1alpha1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                name:
+                  type: string
+              # required:
+              #   - name
+            status:
+              type: object
+              properties:
+                lastReconciliation:
+                  type: string
+                randomNumber:
+                  type: number
+      additionalPrinterColumns:
+        - name: Name
+          type: string
+          description: The name of the person to greet
+          jsonPath: .spec.name
+        - name: Last Reconciliation
+          type: string
+          description: The timestamp of the latest reconciliation
+          jsonPath: .status.lastReconciliation
+  # either Namespaced or Cluster
+  scope: Cluster
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          type: object
+        spec:
+          type: object
+        status:
+          type: object
+  names:
+    plural: greetings
+    singular: greeting
+    kind: Greeting
+    shortNames:
+      - grt
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

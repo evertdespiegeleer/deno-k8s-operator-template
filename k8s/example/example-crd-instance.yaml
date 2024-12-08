@@ -1,0 +1,6 @@
+apiVersion: k8s.evertdespiegeleer.com/v1alpha1
+kind: Greeting
+metadata:
+  name: some-example-greeting
+spec:
+  name: Evert
